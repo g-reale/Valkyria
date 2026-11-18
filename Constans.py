@@ -5,5 +5,5 @@ HOST        = "0.0.0.0"
 TS_SIZE     = 8
 PERIOD_MIN  = 5
 PERIOD_MAX  = 30
-WINDOW      = PERIOD_MAX
+WINDOW      = 180
 TIMEOUT     = PERIOD_MIN

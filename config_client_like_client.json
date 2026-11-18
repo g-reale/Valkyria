@@ -1,9 +1,0 @@
-{
-    "valkyria_user" : "",
-    "valkyria_target": "",
-    "valkyria_ip" : "127.0.0.1",
-    "valkyria_port" : 1818,
-    "valkyria_period": 10,
-    "valkyria_key": "",
-    "valkyria_role": "client"
-}

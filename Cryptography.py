@@ -28,16 +28,19 @@ class Cryptography:
         now = int(time.time())
 
         if abs(now - timestamp) > WINDOW:
+            print("stale packet")
             raise RuntimeError()
 
         self.seen = {n: t for n, t in self.seen.items() if now - t <= WINDOW}
 
         if nonce in self.seen:
+            print("seen packet")
             raise RuntimeError()
 
         try:
             decyphered = self.chacha.decrypt(nonce, cyphered, ts_bytes).decode("utf-8")
         except (InvalidTag, UnicodeDecodeError):
+            print("invalid tag")
             raise RuntimeError()
 
         self.seen[nonce] = timestamp

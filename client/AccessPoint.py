@@ -30,17 +30,11 @@ class AccessPoint:
 
         self.gateway = gateways[0]
 
-        try:
-            with open(config_path, "r", encoding="utf-8") as file:
-                configs = json.load(file)
-            self.user = configs["ap_user"]
-            self.password = configs["ap_password"]
-
-        except (OSError, json.JSONDecodeError, KeyError) as e:
-            raise RuntimeError(
-                "Could not load configuration or required keys"
-            ) from e
-
+        with open(config_path, "r", encoding="utf-8") as file:
+            configs = json.load(file)
+        self.user = configs["ap_user"]
+        self.password = configs["ap_password"]
+        
         self.session = requests.Session()
         self.rules = {}
 

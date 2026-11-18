@@ -18,7 +18,7 @@ from Types import OneUseData, Ipv4, Role, LimitedInteger
 
 class Client:
 
-    def __init__(self,config_path):
+    def __init__(self,config_path,on_change = None):
         
         # let exceptions break the client on config
         with open(config_path, "r", encoding="utf-8") as file:
@@ -38,7 +38,8 @@ class Client:
         self.tx_thread = None
         self.rx_thread = None
         self.dead = Event()
-        self.ips = []
+        self.ips = set()
+        self.on_change = on_change
         
         if self.role.asString() == "client":
             self.valkyria_target = configs["valkyria_target"]
@@ -53,6 +54,7 @@ class Client:
             cyphered = self.cryptography.encrypt(self.packet)
             try:
                 self.socket.sendto(cyphered, self.valkyria_address)
+                print("Sent packet:",self.packet)
             except OSError:
                 pass
             self.dead.wait(self.valkyria_period.asNumber())
@@ -72,8 +74,18 @@ class Client:
 
             try:
                 decyphered = self.cryptography.decrypt(raw)
-                ips = [Ipv4(ip).asString() for ip in decyphered.split("\0") if ip]
+                ips = {Ipv4(ip).asString() for ip in decyphered.split("\0") if ip}
+                
+                if ips == self.ips:
+                    continue
+
+                if self.on_change:
+                    aditions = ips - self.ips
+                    removals = self.ips - ips
+                    self.on_change(aditions,removals)
+                    
                 self.ips = ips
+
             except (RuntimeError):
                 continue
             

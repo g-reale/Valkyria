@@ -1,0 +1,16 @@
+[Unit]
+Description=Valkyria Rendezvous Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=valkyria
+WorkingDirectory=/Valkyria
+ExecStartPre=/usr/bin/git -C /Valkyria pull
+ExecStart=/Valkyria/venv/bin/python -m Server
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

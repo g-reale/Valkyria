@@ -1,0 +1,11 @@
+{
+    "ap_user" : "",
+    "ap_password": "",
+    "valkyria_user" : "",
+    "valkyria_target": "",
+    "valkyria_ip" : "",
+    "valkyria_port" : ,
+    "valkyria_period": ,
+    "valkyria_key": "",
+    "valkyria_role": "client"
+}

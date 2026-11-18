@@ -1,5 +1,5 @@
 from pprint import pprint
-from AccessPoint import AccessPoint, Protocol, Ipv4, PortRange
+from client.AccessPoint import AccessPoint, Protocol, Ipv4, PortRange
 
 ap = AccessPoint('config.json')
 ap.login()
